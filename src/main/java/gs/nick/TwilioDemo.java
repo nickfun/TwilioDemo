@@ -20,11 +20,16 @@ public class TwilioDemo {
             System.out.println("GET /voice");
 
             res.type("application/xml");
+            if (cfg.forwardNumber == null) {
+                return "<Response> <Say>I am not ready. Text me a phone number.</Say> </Response>";
+            }
             return "<Response> <Dial> " + cfg.forwardNumber + " </Dial> </Response>";
         });
 
         get("/sms", (req, res) -> {
             System.out.println("GET /sms");
+
+            res.type("application/xml");
             String body = req.queryParams("Body");
             if (body == null) {
                 return smsTwiml("bad input");
@@ -39,13 +44,13 @@ public class TwilioDemo {
                 System.out.println("cfg is " + cfg.forwardNumber);
                 return smsTwiml("I will forward calls to " + cfg.forwardNumber);
             }
-            return "I don't understand. Current config: \n" + cfg;
+            return smsTwiml("I don't understand. Current config: \n" + cfg);
         });
 
         System.out.println("running on 5002");
     }
 
     public static String smsTwiml(String msg) {
-        return msg;
+        return "<Response><Message>" + msg + "</Message></Response>";
     }
 }
