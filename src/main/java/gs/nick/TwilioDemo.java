@@ -32,7 +32,7 @@ public class TwilioDemo {
             if (body == null) {
                 return smsTwiml("bad input");
             }
-            if (body == "reset") {
+            if (body.toLowerCase().equals("reset")) {
                 cfg.forwardNumber = null;
                 return smsTwiml("reset complete");
             }
