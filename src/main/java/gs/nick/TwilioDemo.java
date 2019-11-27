@@ -32,6 +32,10 @@ public class TwilioDemo {
             if (body == null) {
                 return smsTwiml("bad input");
             }
+            if (body == "reset") {
+                cfg.forwardNumber = null;
+                return smsTwiml("reset complete");
+            }
             if (body.length() == 12) {
                 cfg.forwardNumber = body;
                 return smsTwiml("I will forward calls to " + body);
